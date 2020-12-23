@@ -1,4 +1,4 @@
-#define _WIN32_WINNT 0x502 
+п»ї#define _WIN32_WINNT 0x502 
 #include <iostream>
 #include <Windows.h>
 #include <queue>
@@ -15,8 +15,8 @@ class Request
 };
 
 /**
- *\brief Класс реализующий логику мьютекса
- *\details Для реализации используются виндовые мьютексы
+ *\brief РљР»Р°СЃСЃ СЂРµР°Р»РёР·СѓСЋС‰РёР№ Р»РѕРіРёРєСѓ РјСЊСЋС‚РµРєСЃР°
+ *\details Р”Р»СЏ СЂРµР°Р»РёР·Р°С†РёРё РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ РІРёРЅРґРѕРІС‹Рµ РјСЊСЋС‚РµРєСЃС‹
  */
 class Mutex
 {
@@ -25,16 +25,16 @@ public:
 	~Mutex();
 
 	/**
-	 *\brief Функция блокировки мьютекса
-	 *\param timeout максимальное время ожидания для блокировки
+	 *\brief Р¤СѓРЅРєС†РёСЏ Р±Р»РѕРєРёСЂРѕРІРєРё РјСЊСЋС‚РµРєСЃР°
+	 *\param timeout РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РІСЂРµРјСЏ РѕР¶РёРґР°РЅРёСЏ РґР»СЏ Р±Р»РѕРєРёСЂРѕРІРєРё
 	 */
 	void lock(DWORD timeout = INFINITE);
 
-	/// Функция освобождения мьютекса
+	/// Р¤СѓРЅРєС†РёСЏ РѕСЃРІРѕР±РѕР¶РґРµРЅРёСЏ РјСЊСЋС‚РµРєСЃР°
 	void unlock();
 
 protected:
-	/// Идентификатор мьютекса
+	/// РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РјСЊСЋС‚РµРєСЃР°
 	HANDLE mHandle;
 };
 
@@ -50,8 +50,8 @@ Mutex::~Mutex()
 }
 
 /**
- *\brief Функция блокировки мьютекса
- * \param timeout максимальное время ожидания для блокировки
+ *\brief Р¤СѓРЅРєС†РёСЏ Р±Р»РѕРєРёСЂРѕРІРєРё РјСЊСЋС‚РµРєСЃР°
+ * \param timeout РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РІСЂРµРјСЏ РѕР¶РёРґР°РЅРёСЏ РґР»СЏ Р±Р»РѕРєРёСЂРѕРІРєРё
  */
 void Mutex::lock(DWORD timeout)
 {
@@ -81,22 +81,22 @@ void Mutex::lock(DWORD timeout)
 	}
 }
 
-/// Функция освобождения мьютекса
+/// Р¤СѓРЅРєС†РёСЏ РѕСЃРІРѕР±РѕР¶РґРµРЅРёСЏ РјСЊСЋС‚РµРєСЃР°
 void Mutex::unlock()
 {
 	::ReleaseMutex(mHandle);
 }
 /**
- *\brief Класс для управления работой с мьютексом
- * \details Класс гарантирует что захваченный мьютекс будет освобожден
+ *\brief РљР»Р°СЃСЃ РґР»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ СЂР°Р±РѕС‚РѕР№ СЃ РјСЊСЋС‚РµРєСЃРѕРј
+ * \details РљР»Р°СЃСЃ РіР°СЂР°РЅС‚РёСЂСѓРµС‚ С‡С‚Рѕ Р·Р°С…РІР°С‡РµРЅРЅС‹Р№ РјСЊСЋС‚РµРєСЃ Р±СѓРґРµС‚ РѕСЃРІРѕР±РѕР¶РґРµРЅ
  */
 template< typename T >
 class LockGuard
 {
 public:
 	/**
-	 *\brief Конструктор класса
-	 *\param object объект который нужно блокировать и освобождать
+	 *\brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°
+	 *\param object РѕР±СЉРµРєС‚ РєРѕС‚РѕСЂС‹Р№ РЅСѓР¶РЅРѕ Р±Р»РѕРєРёСЂРѕРІР°С‚СЊ Рё РѕСЃРІРѕР±РѕР¶РґР°С‚СЊ
 	 */
 	LockGuard(T& object)
 		: mObject(object), is_locked(true)
@@ -110,7 +110,7 @@ public:
 			mObject.unlock();
 	}
 
-	/// Освободить мьютекс досрочно
+	/// РћСЃРІРѕР±РѕРґРёС‚СЊ РјСЊСЋС‚РµРєСЃ РґРѕСЃСЂРѕС‡РЅРѕ
 	void unlock()
 	{
 		if (is_locked)
@@ -121,9 +121,9 @@ public:
 	}
 
 protected:
-	/// Объект которым нужно управлять
+	/// РћР±СЉРµРєС‚ РєРѕС‚РѕСЂС‹Рј РЅСѓР¶РЅРѕ СѓРїСЂР°РІР»СЏС‚СЊ
 	T& mObject;
-	/// Захвачен ли объект
+	/// Р—Р°С…РІР°С‡РµРЅ Р»Рё РѕР±СЉРµРєС‚
 	bool is_locked;
 	LockGuard& operator=(const LockGuard&);
 	LockGuard(const LockGuard&);
@@ -131,7 +131,7 @@ protected:
 
 
 /**
- *\brief Класс реализации очереди запросов
+ *\brief РљР»Р°СЃСЃ СЂРµР°Р»РёР·Р°С†РёРё РѕС‡РµСЂРµРґРё Р·Р°РїСЂРѕСЃРѕРІ
  */
 class RequestsQueue
 {
@@ -179,7 +179,7 @@ size_t RequestsQueue::Size()
 }
 
 /**
- *\brief Класс реализации стопера
+ *\brief РљР»Р°СЃСЃ СЂРµР°Р»РёР·Р°С†РёРё СЃС‚РѕРїРµСЂР°
  */
 class Stopper
 {
@@ -250,7 +250,7 @@ DWORD WINAPI consumerThread(LPVOID lpParams)
 		}
 		catch (const std::bad_alloc& ex)
 		{
-			//Не удалось положить запрос в очередь, очередь переполнилась, удаляем запрос
+			//РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕР»РѕР¶РёС‚СЊ Р·Р°РїСЂРѕСЃ РІ РѕС‡РµСЂРµРґСЊ, РѕС‡РµСЂРµРґСЊ РїРµСЂРµРїРѕР»РЅРёР»Р°СЃСЊ, СѓРґР°Р»СЏРµРј Р·Р°РїСЂРѕСЃ
 			DeleteRequest(request);
 			return 0;
 		}
@@ -276,7 +276,7 @@ DWORD WINAPI producerThread(LPVOID lpParams)
 		}
 		catch (const std::bad_alloc& ex)
 		{
-			//Не удалось положить запрос в очередь, очередь переполнилась, удаляем запрос
+			//РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕР»РѕР¶РёС‚СЊ Р·Р°РїСЂРѕСЃ РІ РѕС‡РµСЂРµРґСЊ, РѕС‡РµСЂРµРґСЊ РїРµСЂРµРїРѕР»РЅРёР»Р°СЃСЊ, СѓРґР°Р»СЏРµРј Р·Р°РїСЂРѕСЃ
 			DeleteRequest(request);
 			return 0;
 		}
@@ -288,13 +288,13 @@ DWORD WINAPI producerThread(LPVOID lpParams)
 
 int main()
 {
-	const unsigned int CNT_THREADS = 4; //2 - принимающих запросы, 2 - обрабатывающих
+	const unsigned int CNT_THREADS = 4; //2 - РїСЂРёРЅРёРјР°СЋС‰РёС… Р·Р°РїСЂРѕСЃС‹, 2 - РѕР±СЂР°Р±Р°С‚С‹РІР°СЋС‰РёС…
 	std::vector<HANDLE> threads(CNT_THREADS, NULL);
-	//Создадим структуру с параментрами для функции в потоке
+	//РЎРѕР·РґР°РґРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ СЃ РїР°СЂР°РјРµРЅС‚СЂР°РјРё РґР»СЏ С„СѓРЅРєС†РёРё РІ РїРѕС‚РѕРєРµ
 	std::unique_ptr<ThreadParams> params(new ThreadParams);
 	for (int i = 0; i < CNT_THREADS; ++i)
 	{
-		//Создаем потоки
+		//РЎРѕР·РґР°РµРј РїРѕС‚РѕРєРё
 		threads[i] = i % 2 ? CreateThread(NULL, 0, producerThread, params.get(), 0, NULL) :
 			CreateThread(NULL, 0, consumerThread, params.get(), 0, NULL);
 
@@ -318,7 +318,7 @@ int main()
 	}
 
 
-	//Ждем 30 секунд
+	//Р–РґРµРј 30 СЃРµРєСѓРЅРґ
 	if (!SetWaitableTimer(hTimer, &liDueTime, 0, NULL, NULL, 0))
 	{
 		std::cout << "SetWaitableTimer failed: " << ::GetLastError() << std::endl;
@@ -332,11 +332,11 @@ int main()
 	}
 	else
 	{
-		//Останавливаем выполнение операций
+		//РћСЃС‚Р°РЅР°РІР»РёРІР°РµРј РІС‹РїРѕР»РЅРµРЅРёРµ РѕРїРµСЂР°С†РёР№
 		params.get()->stopper.Stop();
 	}
 
-	//Запускаем работу
+	//Р—Р°РїСѓСЃРєР°РµРј СЂР°Р±РѕС‚Сѓ
 	if (::WaitForMultipleObjects(CNT_THREADS, threads.data(), TRUE, INFINITE) != WAIT_OBJECT_0)
 	{
 		std::cout << "WaitForMultipleObjects failed: " << ::GetLastError() << std::endl;
@@ -344,17 +344,17 @@ int main()
 	}
 
 
-	//Закроем хэндл таймера
+	//Р—Р°РєСЂРѕРµРј С…СЌРЅРґР» С‚Р°Р№РјРµСЂР°
 	::CloseHandle(hTimer);
 
-	//Закроем хэндлы
+	//Р—Р°РєСЂРѕРµРј С…СЌРЅРґР»С‹
 	for (auto &it : threads)
 		::CloseHandle(it);
 
 	std::cout << "Unprocessed requests count = " << params.get()->unprocessedRequests.Size() << std::endl;
 	std::cout << "Processed requests count = " << params.get()->processedRequests.Size() << std::endl;
 
-	//Удалим запросы
+	//РЈРґР°Р»РёРј Р·Р°РїСЂРѕСЃС‹
 	while (auto request = params.get()->unprocessedRequests.Pop())
 		DeleteRequest(request);
 
